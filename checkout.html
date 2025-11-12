@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'; style-src 'self';">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout — Shopping (Electron)</title>
+    <link rel="stylesheet" href="./app/assets/style.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="brand"><div class="logo"></div> Simple Shop</div>
+        <div class="nav">
+          <a href="./index.html" data-testid="nav-products">Products</a>
+          <a href="./checkout.html" data-testid="nav-checkout">Checkout</a>
+        </div>
+      </div>
+
+      <h2 class="section-title">Checkout</h2>
+      <div class="checkout-wrap">
+        <section class="panel">
+          <h3>Shipping details</h3>
+          <div class="field">
+            <label class="label" for="name">Full name</label>
+            <input class="input" id="name" data-testid="chk-name" placeholder="Jane Doe">
+          </div>
+          <div class="field">
+            <label class="label" for="email">Email</label>
+            <input class="input" id="email" data-testid="chk-email" placeholder="jane@example.com">
+          </div>
+          <div class="field">
+            <label class="label" for="address">Address</label>
+            <input class="input" id="address" data-testid="chk-address" placeholder="1 Cyber Street">
+          </div>
+          <div class="field">
+            <label class="label" for="city">City</label>
+            <input class="input" id="city" data-testid="chk-city" placeholder="London">
+          </div>
+          <div class="field">
+            <label class="label" for="postcode">Postcode</label>
+            <input class="input" id="postcode" data-testid="chk-postcode" placeholder="SW1A 1AA">
+          </div>
+          <button class="button btn-primary" id="place-order" data-testid="place-order">Place order</button>
+          <div class="notice" id="form-error" data-testid="form-error" style="display:none;color:#fca5a5"></div>
+          <div class="success" id="order-success" data-testid="order-success" style="display:none"></div>
+        </section>
+
+        <aside class="panel">
+          <h3>Order summary</h3>
+          <div id="summary-items"></div>
+          <div class="totals" style="margin-top:12px">
+            <div>Subtotal: <strong id="sum-subtotal" data-testid="sum-subtotal">£0.00</strong></div>
+            <div>VAT (20%): <strong id="sum-vat" data-testid="sum-vat">£0.00</strong></div>
+            <div>Shipping: <strong id="sum-shipping" data-testid="sum-shipping">£0.00</strong></div>
+            <div class="grand">Grand Total: <strong id="sum-grand" data-testid="sum-grand">£0.00</strong></div>
+          </div>
+          <div id="sum-promo" class="badge" style="display:none" data-testid="sum-promo"></div>
+        </aside>
+      </div>
+
+      <div class="footer">
+        <small>No payment is processed in this demo. Placing order validates the form and clears the cart.</small>
+      </div>
+    </div>
+
+    <script src="./app/checkout.js"></script>
+  </body>
+</html>

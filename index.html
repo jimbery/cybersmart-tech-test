@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'; style-src 'self';">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping (Electron)</title>
+    <link rel="stylesheet" href="./app/assets/style.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="brand"><div class="logo"></div> Simple Shop</div>
+        <div class="nav">
+          <a href="./index.html" data-testid="nav-products">Products</a>
+          <a href="./checkout.html" data-testid="nav-checkout">Checkout</a>
+        </div>
+      </div>
+      <div class="pill"><span class="dot"></span> <span>VAT 20%. Free shipping ≥ £50. Promo: <strong>SAVE10</strong></span></div>
+
+      <h2 class="section-title">Products</h2>
+      <div class="layout">
+        <section>
+          <div class="controls">
+            <label>Category:
+              <select id="filter-category" data-testid="filter-category"></select>
+            </label>
+            <label>Sort:
+              <select id="sort-price" data-testid="sort-price">
+                <option value="lh">Price (Low→High)</option>
+                <option value="hl">Price (High→Low)</option>
+              </select>
+            </label>
+          </div>
+          <div id="product-grid" class="grid"></div>
+        </section>
+        <aside>
+          <div class="cart" aria-label="Cart">
+            <h2>Cart</h2>
+            <div id="cart-empty" data-testid="cart-empty" class="badge">Your cart is empty.</div>
+            <table id="cart-table" style="display:none">
+              <thead>
+                <tr><th>Item</th><th>Price</th><th>Qty</th><th>Total</th><th></th></tr>
+              </thead>
+              <tbody id="cart-body"></tbody>
+            </table>
+
+            <div class="promo">
+              <input id="promo-input" data-testid="promo-input" placeholder="Promo code">
+              <button class="button" id="apply-promo" data-testid="apply-promo">Apply</button>
+              <button class="button" id="clear-promo" data-testid="clear-promo" style="display:none">Clear</button>
+              <div id="promo-error" class="error" data-testid="promo-error" style="display:none"></div>
+              <div id="promo-applied" class="applied" data-testid="promo-applied" style="display:none"></div>
+            </div>
+
+            <div class="totals">
+              <div>Subtotal: <strong id="subtotal" data-testid="subtotal">£0.00</strong></div>
+              <div>VAT (20%): <strong id="vat" data-testid="vat">£0.00</strong></div>
+              <div>Shipping: <strong id="shipping" data-testid="shipping">£0.00</strong></div>
+              <div class="grand">Grand Total: <strong id="grand" data-testid="grand">£0.00</strong></div>
+            </div>
+
+            <a class="button btn-primary" href="./checkout.html" data-testid="go-checkout">Go to checkout</a>
+          </div>
+        </aside>
+      </div>
+
+      <div class="footer">
+        <small>This app is intentionally minimal. Data source: <code>/public/products.json</code>. All calculations on this page.</small>
+      </div>
+    </div>
+
+    <script src="./app/renderer.js"></script>
+  </body>
+</html>

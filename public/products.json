@@ -1,0 +1,50 @@
+[
+  {
+    "id": "sku-hoodie",
+    "name": "Cyber Hoodie",
+    "price": 29.99,
+    "category": "Apparel",
+    "stock": 8,
+    "description": "Soft cotton hoodie with embroidered logo."
+  },
+  {
+    "id": "sku-mug",
+    "name": "Blue Mug",
+    "price": 7.5,
+    "category": "Accessories",
+    "stock": 25,
+    "description": "Ceramic mug for your favourite brew."
+  },
+  {
+    "id": "sku-stickers",
+    "name": "Sticker Pack",
+    "price": 3.99,
+    "category": "Accessories",
+    "stock": 100,
+    "description": "Assorted laptop stickers."
+  },
+  {
+    "id": "sku-tshirt",
+    "name": "T-Shirt",
+    "price": 14.0,
+    "category": "Apparel",
+    "stock": 15,
+    "description": "Unisex tee, classic fit."
+  },
+  {
+    "id": "sku-cap",
+    "name": "Cap",
+    "price": 12.5,
+    "category": "Accessories",
+    "stock": 10,
+    "description": "Adjustable cotton cap."
+  },
+  {
+    "id": "sku-backpack",
+    "name": "Backpack",
+    "price": 45.0,
+    "category": "Bags",
+    "stock": 5,
+    "description": "Compact backpack for daily carry."
+  }
+]

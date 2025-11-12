@@ -1,0 +1,17 @@
+{
+  "name": "shopping-electron-exercise",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Minimal Electron shopping app for QA exercise",
+  "main": "app/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron .",
+    "package": "echo \"Packaging not required for this exercise\""
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^24.10.1",
+    "electron": "^30.0.0"
+  }
+}

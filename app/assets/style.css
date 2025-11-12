@@ -1,0 +1,73 @@
+
+:root {
+  --bg: #0b1220;
+  --card: #0f172a;
+  --muted: #93a3b8;
+  --text: #e5e7eb;
+  --accent: #60a5fa;
+  --accent-2: #34d399;
+  --border: #1f2a44;
+  --danger: #ef4444;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu;
+  background: radial-gradient(1200px 800px at 20% -10%, #13203b, transparent 70%),
+              radial-gradient(1000px 700px at 120% 0%, #112437, transparent 60%),
+              var(--bg);
+  color: var(--text);
+}
+.container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+.header {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom: 16px;
+}
+.brand { display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.2px; }
+.brand .logo { width: 28px; height: 28px; border-radius:8px; background: linear-gradient(135deg,#60a5fa,#34d399); }
+.nav a {
+  color: var(--muted); text-decoration:none; padding:8px 12px; border-radius:10px; border:1px solid transparent;
+}
+.nav a:hover { color: var(--text); border-color: var(--border); background:#0b1831; }
+.section-title { font-size: 18px; margin: 14px 0; }
+.controls{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:12px}
+label{display:flex;align-items:center;gap:6px;color:var(--muted)}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--border);background:#0c1732;color:var(--text)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.card{border:1px solid var(--border);border-radius:16px;padding:14px;background:linear-gradient(180deg,#0d1934,#0b1428);box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.title{font-weight:700}
+.meta{color:var(--muted)}
+.price{font-size:15px}
+.qty input{width:70px;margin-left:6px;padding:8px 10px;border-radius:10px;border:1px solid var(--border);background:#091126;color:var(--text)}
+.button {
+  padding:10px 12px;border-radius:12px;border:1px solid var(--border);background:#0b1831;cursor:pointer;color:#e5e7eb;
+  transition:.2s transform, .2s background;
+}
+.button:hover { background:#102247; transform: translateY(-1px); }
+.button:disabled{opacity:.6;cursor:not-allowed}
+.pill { display:inline-flex; align-items:center; gap:8px; padding:8px 10px; border:1px solid var(--border); border-radius:999px; background:#0b1831; }
+.pill .dot { width:8px; height:8px; border-radius:50%; background: var(--accent); }
+.layout { display:grid; grid-template-columns:1fr 400px; gap:16px; }
+@media (max-width: 900px){ .layout{grid-template-columns:1fr} }
+.cart{border:1px solid var(--border);border-radius:16px;padding:14px;background:linear-gradient(180deg,#0d1934,#0b1428);display:flex;flex-direction:column;gap:12px}
+table{width:100%;border-collapse:collapse}
+th, td{border-bottom:1px solid #162243;padding:10px;text-align:left}
+.promo{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.promo input{padding:8px 10px;border-radius:10px;border:1px solid var(--border);background:#091126;color:var(--text)}
+.promo .error{color:#fca5a5}
+.promo .applied{color:#86efac}
+.totals{margin-top:8px;display:flex;flex-direction:column;gap:6px}
+.grand{font-size:18px}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#0b1831;border:1px solid var(--border);color:var(--muted)}
+.footer{margin-top:18px;color:var(--muted)}
+.checkout-wrap { display:grid; grid-template-columns:1fr 380px; gap:16px; }
+@media (max-width: 900px){ .checkout-wrap{grid-template-columns:1fr} }
+.panel { border:1px solid var(--border); border-radius:16px; padding:16px; background:linear-gradient(180deg,#0d1934,#0b1428); }
+.field { display:flex; flex-direction:column; gap:6px; margin-bottom:12px; }
+.input { padding:10px 12px; border-radius:10px; border:1px solid var(--border); background:#091126; color:var(--text); }
+.label { color: var(--muted); font-size: 12px; }
+.btn-primary { background: linear-gradient(90deg, var(--accent), var(--accent-2)); color:#0b1220; border:none; }
+.btn-primary:hover { transform: translateY(-1px); filter:brightness(1.05); }
+.notice { color: var(--muted); font-size: 12px; margin-top: 6px; }
+.success { color: #a7f3d0; }
