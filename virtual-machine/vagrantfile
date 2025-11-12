@@ -1,37 +1,59 @@
-# Vagrantfile
+# Vagrantfile for macOS guest on Apple hardware
 Vagrant.configure("2") do |config|
-  # Base box
-  config.vm.box = "gusztavvargadr/windows-10"
+  # Base box - using a macOS box
+  config.vm.box = "generic/macos1015"
+  # Alternative boxes you can try:
+  # config.vm.box = "macos-ventura"
+  # config.vm.box = "macos-monterey"
 
   # VM resources
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "4096"
     vb.cpus = 2
+    # Optional: Enable GUI to see macOS desktop
+    # vb.gui = true
   end
 
-  # Network (optional: SSH access from host)
-  config.vm.network "forwarded_port", guest: 3000, host: 3000 # Electron dev server
+  # Alternative: Use parallels provider if you have Parallels Desktop
+  # config.vm.provider "parallels" do |prl|
+  #   prl.memory = 4096
+  #   prl.cpus = 2
+  # end
 
-  config.vm.communicator = "winrm"
-  config.winrm.username = "vagrant"
-  config.winrm.password = "vagrant"
+  # Boot timeout
+  config.vm.boot_timeout = 600
 
+  # Network: forward Electron dev server port
+  config.vm.network "forwarded_port", guest: 3000, host: 3003
 
-  # Sync folder: maps host folder to VM
-  config.vm.synced_folder "../", "C:/ElectronApp"
+  # Communicator: SSH (macOS uses SSH instead of WinRM)
+  config.vm.communicator = "ssh"
+  config.ssh.username = "vagrant"
+  config.ssh.password = "vagrant"
+  # Or use private key authentication
+  config.ssh.insert_key = false
 
-  config.vm.provision "shell", inline: <<-POWERSHELL
-    # Install Chocolatey
-    Set-ExecutionPolicy Bypass -Scope Process -Force
-    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-    iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+  # Sync folder - adjusted for macOS paths
+  config.vm.synced_folder "../", "/Users/vagrant/ElectronApp"
 
-    # Install Node.js
-    choco install -y nodejs-lts
-
-    # Copy app (already synced) and install dependencies
-    cd C:/ElectronApp
+  # Provisioning for macOS
+  config.vm.provision "shell", inline: <<-SHELL
+    #!/bin/bash
+    
+    # Install Homebrew (macOS package manager)
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    
+    # Add Homebrew to PATH
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/vagrant/.zprofile
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+    
+    # Install Node.js and Git
+    brew install node git
+    
+    # Navigate to synced folder and install dependencies
+    cd /Users/vagrant/ElectronApp
     npm install
-POWERSHELL
-
+    
+    echo "Provisioning completed successfully!"
+  SHELL
 end
