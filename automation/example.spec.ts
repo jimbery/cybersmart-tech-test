@@ -1,18 +1,25 @@
-import { test, expect } from '@playwright/test';
+import { _electron as electron, test, expect } from '@playwright/test';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test.describe('Electron app', () => {
+  let app: any;
+  let page: any;
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
-});
+  test.beforeAll(async () => {
+    app = await electron.launch({ args: ['.'] }); // '.' points to the electron main file
+    page = await app.firstWindow(); // Get the first renderer window
+  });
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+  test.afterAll(async () => {
+    await app.close();
+  });
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
+  test('should open home screen', async () => {
+    const title = await page.title();
+    expect(title).toContain('Shopping (Electron)');
+  });
 
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+  // test('should navigate to settings', async () => {
+  //   await page.click('button#settings');
+  //   await expect(page.locator('h1')).toHaveText('Settings');
+  // });
 });

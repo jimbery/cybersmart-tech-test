@@ -7,7 +7,8 @@
   "scripts": {
     "start": "electron .",
     "dev": "electron .",
-    "package": "echo \"Packaging not required for this exercise\""
+    "package": "echo \"Packaging not required for this exercise\"",
+    "test": "playwright test"
   },
   "devDependencies": {
     "@playwright/test": "^1.56.1",
