@@ -1,8 +1,8 @@
-import { _electron as electron, test, expect } from '@playwright/test';
+import { _electron as electron, test, expect, ElectronApplication, Page } from '@playwright/test';
 
 test.describe('Electron app', () => {
-  let app: any;
-  let page: any;
+  let app: ElectronApplication;
+  let page: Page;
 
   test.beforeAll(async () => {
     app = await electron.launch({ args: ['.'] }); // '.' points to the electron main file
