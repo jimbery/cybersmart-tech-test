@@ -1,0 +1,37 @@
+# Vagrantfile
+Vagrant.configure("2") do |config|
+  # Base box
+  config.vm.box = "gusztavvargadr/windows-10"
+
+  # VM resources
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "4096"
+    vb.cpus = 2
+  end
+
+  # Network (optional: SSH access from host)
+  config.vm.network "forwarded_port", guest: 3000, host: 3000 # Electron dev server
+
+  config.vm.communicator = "winrm"
+  config.winrm.username = "vagrant"
+  config.winrm.password = "vagrant"
+
+
+  # Sync folder: maps host folder to VM
+  config.vm.synced_folder "../", "C:/ElectronApp"
+
+  config.vm.provision "shell", inline: <<-POWERSHELL
+    # Install Chocolatey
+    Set-ExecutionPolicy Bypass -Scope Process -Force
+    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+    iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+    # Install Node.js
+    choco install -y nodejs-lts
+
+    # Copy app (already synced) and install dependencies
+    cd C:/ElectronApp
+    npm install
+POWERSHELL
+
+end
