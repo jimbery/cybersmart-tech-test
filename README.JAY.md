@@ -18,24 +18,33 @@ The Electron window will open automatically.
 
 ## Candidate Task
 
-### Part 1 — Manual tests
-Provide a manual test suite (Markdown/CSV/Excel) that covers some of these bullet points:
-- Add to cart, adjust quantity, remove item
-- Sorting and filtering interactions
-- Rounding and totals (VAT, shipping threshold, promo)
-- Persistence on window reload (`Ctrl/Cmd+R`)
-- Negative cases (invalid promo, qty > stock, etc.)
+## Part 1 — Manual Tests
 
-Include: **ID, Title, Preconditions, Steps, Expected Result, Priority, Notes**.
+Manual test suite is available in Excel in the folder: `manual-test`
 
-### Part 2 — Automation (TypeScript)
-done with playwright@v1.56.1 and node @v22.13.0
+**Coverage:**
+- Cart functionality  
+- Sorting functionality  
 
-to install dependencies
+## Part 2 — Automation (TypeScript)
+
+Automated tests have been implemented using:
+
+- `playwright@v1.56.1`  
+- `node@v22.13.0`  
+
+**Coverage:**
+- Cart functionality  
+
+**Setup & Run:**
+
+```bash
+# Install dependencies
 npm i
 
-to run tests
+# Run automated tests
 npm run test
+```
 
 ### Part 3 - Run automated tests on virtual machine
 tested on windows 11 machine 24H2 26100.7171; vagrant@v2.4.9; virtual box@v7.2.4 r170995
