@@ -9,7 +9,8 @@ Vagrant.configure("2") do |config|
     vb.cpus = 2
     vb.gui = true
 
-    # as electron runs through the chromium gpu engine, we need to enable the following 
+    # electron performance is slow with default graphics settings
+    # enable 3D acceleration and sufficient VRAM for better performance
     vb.customize ["modifyvm", :id, "--vram", "256"]        
     vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"] 
     vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
