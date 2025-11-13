@@ -10,6 +10,3 @@ export interface Product {
 }
 
 export const products: Product[] = productsJson;
-
-export const getProductById = (id: string): Product | undefined =>
-  products.find((p) => p.id === id);

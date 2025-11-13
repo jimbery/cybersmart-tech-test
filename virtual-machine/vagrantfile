@@ -1,57 +1,38 @@
-# Vagrantfile for Windows 10 with VirtualBox
+# vagrantfile for Windows 10 with VirtualBox
 Vagrant.configure("2") do |config|
-  # Base box - replace with a valid Windows box from Vagrant Cloud
   config.vm.box = "gusztavvargadr/windows-10"
   config.vm.guest = :windows
   config.vm.boot_timeout = 1200
 
-  # VM resources for VirtualBox
   config.vm.provider "virtualbox" do |vb|
     vb.memory = 4096
     vb.cpus = 2
     vb.gui = true
 
-    # --- Display / graphics settings ---
-    vb.customize ["modifyvm", :id, "--vram", "256"]          # Video memory in MB
-    vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"]  # Use VMSVGA for EFI
-    vb.customize ["modifyvm", :id, "--accelerate3d", "on"]  # Enable 3D acceleration
-
-    # Optional: Enable EFI if your box supports it
-    # vb.customize ["modifyvm", :id, "--firmware", "efi"]
+    # as electron runs through the chromium gpu engine, we need to enable the following 
+    vb.customize ["modifyvm", :id, "--vram", "256"]        
+    vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"] 
+    vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
   end
- 
-  # Network: forward Electron dev server port
-  config.vm.network "forwarded_port", guest: 3000, host: 3003, auto_correct: true
 
-  # # Communicator: WinRM (for Windows boxes)
-  # config.vm.communicator = "winrm"
-  # config.winrm.username = "vagrant"
-  # config.winrm.password = "vagrant"
-
+  # remove current file if exists on vm already as copy doesn't overwrite
   config.vm.provision "shell", inline: <<-POWERSHELL
     Remove-Item -Recurse -Force "/Users/vagrant/ElectronApp"
   POWERSHELL
 
+  # this isn't ideal due to the format of the folder structure I currently have
+  # it copies over the vm as well meaning it takes a while to copy over
   config.vm.provision "file", source: "../", destination: "/Users/vagrant/ElectronApp"
 
 
-  # Provisioning with PowerShell
   config.vm.provision "shell", inline: <<-POWERSHELL
-    # Set execution policy
-    Set-ExecutionPolicy Bypass -Scope Process -Force
-
-    # Ensure TLS 1.2
-    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-
     # Install Chocolatey
     iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
-    # Install Node.js LTS and Git
-    choco install -y nodejs-lts git
+    choco install -y nodejs-lts
 
-    refreshenv
+    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 
-    # Navigate to synced folder and install dependencies
     cd /Users/vagrant/ElectronApp
     npm install
 

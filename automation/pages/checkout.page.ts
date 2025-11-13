@@ -1,25 +1,20 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 
 export class CheckoutPage {
   readonly page: Page;
-
   readonly basketItems: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    
-    this.basketItems = page.locator('#summary-items')
+    this.basketItems = page.locator('#summary-items');
   }
 
   async getTitleText(): Promise<string> {
     return this.page.title();
   }
 
-
-  // basket
-  async getBasketItems() {
-    const basketItems = this.basketItems
-
-    return await basketItems.innerText()
+  // Basket
+  async getBasketItems(): Promise<string> {
+    return this.basketItems.innerText();
   }
 }

@@ -7,18 +7,23 @@ import { mockOutOfStock } from './helpers/mock-out-of-stock';
 
 test.describe('basket', () => {
   let app: ElectronApplication;
-  let page: Page
+  let page: Page;
   let productPage: ProductPage;
-  let checkoutPage: CheckoutPage
 
-  test.beforeAll(async () => {
+  test.beforeEach(async () => {
     app = await electron.launch({ args: ['.'] });
     page = await app.firstWindow();
     productPage = new ProductPage(page);
-    checkoutPage = new CheckoutPage(page)
+
+    await page.waitForLoadState('domcontentloaded');
   });
 
-  test.afterAll(async () => {
+  test.afterEach(async () => {
+    await page.evaluate(() => {
+      localStorage.clear();
+      sessionStorage.clear();
+    });
+
     await app.close();
   });
 
@@ -30,48 +35,38 @@ test.describe('basket', () => {
   });
 
   test('add product to basket by quantity: product page basket', async () => {
-    const productsArr = products
-    const firstProduct = productsArr[0]
-    const expectedQty = 2
+    const firstProduct = products[0];
+    const expectedQty = 2;
 
     await productPage.changeProductQtyById(firstProduct.id, expectedQty);
     await productPage.addProductToCartById(firstProduct.id);
 
     const qty = await productPage.getBasketItemQtyById(firstProduct.id);
-
     expect(qty).toBe(expectedQty);
   });
 
   test('add product to basket by quantity: checkout page', async () => {
-    const productsArr = products
-    const firstProduct = productsArr[0]
-    const expectedQty = 2
+    const checkoutPage = new CheckoutPage(page);
+    const firstProduct = products[0];
+    const expectedQty = 2;
 
     await productPage.changeProductQtyById(firstProduct.id, expectedQty);
     await productPage.addProductToCartById(firstProduct.id);
+    await productPage.clickCheckoutPageButton();
 
-    await productPage.clickCheckoutPageButton()
-
-    const basketItems = await checkoutPage.getBasketItems()
-
-    expect(basketItems).toContain(`${firstProduct.name} × ${expectedQty}`)
+    const basketItems = await checkoutPage.getBasketItems();
+    expect(basketItems).toContain(`${firstProduct.name} × ${expectedQty}`);
   });
 
   test('add product to basket by quantity with stock 0', async () => {
-    const productsArr = products
     const strings = new EnGb();
+    const modifiedArr = await mockOutOfStock(page, products);
+    const firstProduct = modifiedArr[0];
 
-
-    const modifiedArr = await mockOutOfStock(page, productsArr)
-    const firstProduct = modifiedArr[0]
-  
-    const productPage = new ProductPage(page);
-    
-    // reload page to load mocked array
+    // Reload page to load mocked array
     await page.reload();
-  
+
     const addToBasketBtnText = await productPage.getAddToBasketBtnTextById(firstProduct.id);
-  
-    expect(addToBasketBtnText).toBe(strings.outOfStock)
+    expect(addToBasketBtnText).toBe(strings.outOfStock);
   });
 });
