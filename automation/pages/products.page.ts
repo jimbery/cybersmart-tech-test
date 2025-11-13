@@ -45,19 +45,19 @@ export class ProductPage {
     await addToBasketBtn.click();
   }
 
-  async getAddToBasketBtnTextById(id: string): Promise<string> {
+  async getAddToCartBtnTextById(id: string): Promise<string> {
     const card = this.getProductCardById(id);
     const addToBasketBtn = card.getByTestId(`add-${id}`);
     return addToBasketBtn.innerText();
   }
 
-  // Basket
-  getBasketItemById(id: string): Locator {
+  // Cart
+  getCartItemById(id: string): Locator {
     return this.page.getByTestId(`cart-row-${id}`);
   }
 
-  async getBasketItemQtyById(id: string): Promise<number> {
-    const basketItem = this.getBasketItemById(id);
+  async getCartItemQtyById(id: string): Promise<number> {
+    const basketItem = this.getCartItemById(id);
     const qtyString = await basketItem.getByTestId(`cart-qty-${id}`).inputValue();
     return parseInt(qtyString, 10);
   }

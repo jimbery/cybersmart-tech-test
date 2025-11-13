@@ -5,7 +5,7 @@ import { EnGb } from '../lang/en-gb';
 import { CheckoutPage } from '../pages/checkout.page';
 import { mockOutOfStock } from './helpers/mock-out-of-stock';
 
-test.describe('basket', () => {
+test.describe('cart', () => {
   let app: ElectronApplication;
   let page: Page;
   let productPage: ProductPage;
@@ -34,18 +34,18 @@ test.describe('basket', () => {
     expect(title).toContain(strings.productPageTitle);
   });
 
-  test('add product to basket by quantity: product page basket', async () => {
+  test('add product to cart by quantity: product page cart', async () => {
     const firstProduct = products[0];
     const expectedQty = 2;
 
     await productPage.changeProductQtyById(firstProduct.id, expectedQty);
     await productPage.addProductToCartById(firstProduct.id);
 
-    const qty = await productPage.getBasketItemQtyById(firstProduct.id);
+    const qty = await productPage.getCartItemQtyById(firstProduct.id);
     expect(qty).toBe(expectedQty);
   });
 
-  test('add product to basket by quantity: checkout page', async () => {
+  test('add product to cart by quantity: checkout page', async () => {
     const checkoutPage = new CheckoutPage(page);
     const firstProduct = products[0];
     const expectedQty = 2;
@@ -54,11 +54,11 @@ test.describe('basket', () => {
     await productPage.addProductToCartById(firstProduct.id);
     await productPage.clickCheckoutPageButton();
 
-    const basketItems = await checkoutPage.getBasketItems();
+    const basketItems = await checkoutPage.getCartItems();
     expect(basketItems).toContain(`${firstProduct.name} × ${expectedQty}`);
   });
 
-  test('add product to basket by quantity with stock 0', async () => {
+  test('add product to cart by quantity with stock 0', async () => {
     const strings = new EnGb();
     const modifiedArr = await mockOutOfStock(page, products);
     const firstProduct = modifiedArr[0];
@@ -66,7 +66,7 @@ test.describe('basket', () => {
     // Reload page to load mocked array
     await page.reload();
 
-    const addToBasketBtnText = await productPage.getAddToBasketBtnTextById(firstProduct.id);
+    const addToBasketBtnText = await productPage.getAddToCartBtnTextById(firstProduct.id);
     expect(addToBasketBtnText).toBe(strings.outOfStock);
   });
 });
