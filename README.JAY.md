@@ -1,73 +1,53 @@
-# Cybersmart Tech Task — Jay Imbery
+# Shopping Electron App
 
----
+A tiny **Electron** desktop app (Windows/macOS/Linux).
 
-## Candidate Task Overview
+## manual tests
 
-This repository demonstrates both **manual and automated testing** for a shopping Electron application.
+## Prerequisites
+- Node.js 18+ and npm
 
----
-
-## Part 1 — Manual Tests
-
-Manual test suite is available in Excel in the folder: `manual-test`
-
-**Coverage:**
-- Cart functionality  
-- Sorting functionality  
-
----
-
-## Part 2 — Automation (TypeScript)
-
-Automated tests have been implemented using:
-
-- `playwright@v1.56.1`  
-- `node@v22.13.0`  
-
-**Coverage:**
-- Cart functionality  
-
-**Setup & Run:**
-
+## run automated tests on local
 ```bash
-# Install dependencies
+npm install
+npm start
+```
+The Electron window will open automatically.
+
+---
+
+## Candidate Task
+
+### Part 1 — Manual tests
+Provide a manual test suite (Markdown/CSV/Excel) that covers some of these bullet points:
+- Add to cart, adjust quantity, remove item
+- Sorting and filtering interactions
+- Rounding and totals (VAT, shipping threshold, promo)
+- Persistence on window reload (`Ctrl/Cmd+R`)
+- Negative cases (invalid promo, qty > stock, etc.)
+
+Include: **ID, Title, Preconditions, Steps, Expected Result, Priority, Notes**.
+
+### Part 2 — Automation (TypeScript)
+done with playwright@v1.56.1 and node @v22.13.0
+
+to install dependencies
 npm i
 
-# Run automated tests
+to run tests
 npm run test
-```
 
-## Part 3 — Running Automated Tests on a Virtual Machine
+### Part 3 - Run automated tests on virtual machine
+tested on windows 11 machine 24H2 26100.7171; vagrant@v2.4.9; virtual box@v7.2.4 r170995
 
-**Environment:**
-
-- Windows 11, 24H2 (Build 26100.7171)  
-- Vagrant v2.4.9  
-- VirtualBox v7.2.4 r170995  
-
-**Steps to Set Up the VM:**
-
-1. Navigate to the virtual machine folder:
-
-```bash
 cd virtual-machine
-```
-
-2. Start and provision the VM:
-
-```bash
 vagrant up
-```
 
-3. Running Automated Tests:
+wait for machine to power up and provision
 
-Normal execution (internet enabled):
-```bash
-powershell -ExecutionPolicy Bypass -File '.\run-tests.ps1'
-```
+to run tests in normal set up
+powershell -ExecutionPolicy Bypass -File '.\run-tests.ps1'   
 
-Execution with internet blocked (via firewall):
-```bash
-powershell -ExecutionPolicy Bypass -File '.\run-tests.ps1'
-```
+to run tests with internet blocked through firewall
+powershell -ExecutionPolicy Bypass -File '.\run-tests-no-internet.ps1'   
+
