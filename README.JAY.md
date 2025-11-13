@@ -16,8 +16,6 @@ Manual test suite is available in Excel in the folder: `manual-test`
 - Cart functionality  
 - Sorting functionality  
 
-> The manual tests are structured with clear preconditions, steps, expected results, and notes for QA tracking.
-
 ---
 
 ## Part 2 — Automation (TypeScript)
