@@ -30,7 +30,11 @@ export class ProductPage {
     const nameLocator = card.locator('.title');
     const name = await nameLocator.textContent();
 
-    return name?.trim() || '';
+    if (!name) {
+      throw new Error(`no product found with id ${id}`)
+    }
+
+    return name.trim();
   }
 
   async changeProductQtyById(id: string, qty: number): Promise<void> {
