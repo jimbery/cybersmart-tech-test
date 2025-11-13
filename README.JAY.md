@@ -45,9 +45,12 @@ vagrant up
 
 wait for machine to power up and provision
 
-to run tests in normal set up
-powershell -ExecutionPolicy Bypass -File '.\run-tests.ps1'   
+Normal execution (internet enabled):
+```bash
+powershell -ExecutionPolicy Bypass -File '.\run-tests.ps1'
+```
 
-to run tests with internet blocked through firewall
-powershell -ExecutionPolicy Bypass -File '.\run-tests-no-internet.ps1'   
-
+Execution with internet blocked (via firewall):
+```bash
+powershell -ExecutionPolicy Bypass -File '.\run-tests-no-internet.ps1'
+```
