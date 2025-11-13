@@ -41,14 +41,14 @@ export class ProductPage {
 
   async addProductToCartById(id: string): Promise<void> {
     const card = this.getProductCardById(id);
-    const addToBasketBtn = card.getByTestId(`add-${id}`);
-    await addToBasketBtn.click();
+    const addToCartBtn = card.getByTestId(`add-${id}`);
+    await addToCartBtn.click();
   }
 
   async getAddToCartBtnTextById(id: string): Promise<string> {
     const card = this.getProductCardById(id);
-    const addToBasketBtn = card.getByTestId(`add-${id}`);
-    return addToBasketBtn.innerText();
+    const addToCartBtn = card.getByTestId(`add-${id}`);
+    return addToCartBtn.innerText();
   }
 
   // Cart
@@ -57,8 +57,8 @@ export class ProductPage {
   }
 
   async getCartItemQtyById(id: string): Promise<number> {
-    const basketItem = this.getCartItemById(id);
-    const qtyString = await basketItem.getByTestId(`cart-qty-${id}`).inputValue();
+    const cartItem = this.getCartItemById(id);
+    const qtyString = await cartItem.getByTestId(`cart-qty-${id}`).inputValue();
     return parseInt(qtyString, 10);
   }
 }

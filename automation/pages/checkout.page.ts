@@ -13,7 +13,7 @@ export class CheckoutPage {
     return this.page.title();
   }
 
-  // Basket
+  // Cart
   async getCartItems(): Promise<string> {
     return this.cartItems.innerText();
   }

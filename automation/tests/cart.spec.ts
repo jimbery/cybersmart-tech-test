@@ -34,7 +34,7 @@ test.describe('cart', () => {
     expect(title).toContain(strings.productPageTitle);
   });
 
-  test('add product to cart by quantity: product page cart', async () => {
+  test('CART-001 - add product to cart by quantity: product page cart', async () => {
     const firstProduct = products[0];
     const expectedQty = 2;
 
@@ -45,7 +45,7 @@ test.describe('cart', () => {
     expect(qty).toBe(expectedQty);
   });
 
-  test('add product to cart by quantity: checkout page', async () => {
+  test('CART-002 - add product to cart by quantity: checkout page', async () => {
     const checkoutPage = new CheckoutPage(page);
     const firstProduct = products[0];
     const expectedQty = 2;
@@ -54,11 +54,11 @@ test.describe('cart', () => {
     await productPage.addProductToCartById(firstProduct.id);
     await productPage.clickCheckoutPageButton();
 
-    const basketItems = await checkoutPage.getCartItems();
-    expect(basketItems).toContain(`${firstProduct.name} × ${expectedQty}`);
+    const cartItems = await checkoutPage.getCartItems();
+    expect(cartItems).toContain(`${firstProduct.name} × ${expectedQty}`);
   });
 
-  test('add product to cart by quantity with stock 0', async () => {
+  test('CART-003 - add product to cart by quantity with stock 0', async () => {
     const strings = new EnGb();
     const modifiedArr = await mockOutOfStock(page, products);
     const firstProduct = modifiedArr[0];
@@ -66,7 +66,7 @@ test.describe('cart', () => {
     // Reload page to load mocked array
     await page.reload();
 
-    const addToBasketBtnText = await productPage.getAddToCartBtnTextById(firstProduct.id);
-    expect(addToBasketBtnText).toBe(strings.outOfStock);
+    const addToCartBtnText = await productPage.getAddToCartBtnTextById(firstProduct.id);
+    expect(addToCartBtnText).toBe(strings.outOfStock);
   });
 });
