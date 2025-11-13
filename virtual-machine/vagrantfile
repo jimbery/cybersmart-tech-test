@@ -1,0 +1,42 @@
+# vagrantfile for Windows 10 with VirtualBox
+Vagrant.configure("2") do |config|
+  config.vm.box = "gusztavvargadr/windows-10"
+  config.vm.guest = :windows
+  config.vm.boot_timeout = 1200
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = 4096
+    vb.cpus = 2
+    vb.gui = true
+
+    # electron performance is slow with default graphics settings
+    # enable 3D acceleration and sufficient VRAM for better performance
+    vb.customize ["modifyvm", :id, "--vram", "256"]        
+    vb.customize ["modifyvm", :id, "--graphicscontroller", "vmsvga"] 
+    vb.customize ["modifyvm", :id, "--accelerate3d", "on"]
+  end
+
+  # remove current file if exists on vm already as copy doesn't overwrite
+  config.vm.provision "shell", inline: <<-POWERSHELL
+    Remove-Item -Recurse -Force "/Users/vagrant/ElectronApp"
+  POWERSHELL
+
+  # this isn't ideal due to the format of the folder structure I currently have
+  # it copies over the vm as well meaning it takes a while to copy over
+  config.vm.provision "file", source: "../", destination: "/Users/vagrant/ElectronApp"
+
+
+  config.vm.provision "shell", inline: <<-POWERSHELL
+    # Install Chocolatey
+    iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+    choco install -y nodejs-lts
+
+    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+
+    cd /Users/vagrant/ElectronApp
+    npm install
+
+    Write-Host "Provisioning completed successfully!"
+  POWERSHELL
+end

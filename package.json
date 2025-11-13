@@ -7,11 +7,12 @@
   "scripts": {
     "start": "electron .",
     "dev": "electron .",
-    "package": "echo \"Packaging not required for this exercise\""
+    "package": "echo \"Packaging not required for this exercise\"",
+    "test": "playwright test"
   },
   "devDependencies": {
     "@playwright/test": "^1.56.1",
     "@types/node": "^24.10.1",
-    "electron": "^30.0.0"
+    "electron": "^30.5.1"
   }
 }
