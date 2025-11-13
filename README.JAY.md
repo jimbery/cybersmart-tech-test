@@ -1,22 +1,4 @@
-# Shopping Electron App
-
-A tiny **Electron** desktop app (Windows/macOS/Linux).
-
-## manual tests
-
-## Prerequisites
-- Node.js 18+ and npm
-
-## run automated tests on local
-```bash
-npm install
-npm start
-```
-The Electron window will open automatically.
-
----
-
-## Candidate Task
+# Candidate Task
 
 ## Part 1 — Manual Tests
 
