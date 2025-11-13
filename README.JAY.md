@@ -49,8 +49,11 @@ npm run test
 ### Part 3 - Run automated tests on virtual machine
 tested on windows 11 machine 24H2 26100.7171; vagrant@v2.4.9; virtual box@v7.2.4 r170995
 
+```bash
 cd virtual-machine
+
 vagrant up
+```
 
 wait for machine to power up and provision
 
